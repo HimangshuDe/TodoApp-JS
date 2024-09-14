@@ -1,0 +1,227 @@
+"use strict";
+
+// data and notes
+let dataObjects = new Map();
+
+let notesObjects = new Map();
+///////////////////////////////// LOCAL STORAGE ///////////////////////////////
+// Storing data in local storage
+const storeDataToLocalStorage = function () {
+  window.localStorage.setItem(
+    "data",
+    JSON.stringify(Array.from(dataObjects.entries()))
+  );
+};
+
+// Storing notes in local storage
+const storeNotesToLocalStorage = function () {
+  window.localStorage.setItem(
+    "notes",
+    JSON.stringify(Array.from(notesObjects.entries()))
+  );
+};
+
+//////////////////////////////////////// Selectors ////////////////////////////////////////////
+let dataList = document.querySelector("#data-list");
+
+let notesList = document.querySelector("#main-notes-list");
+
+let dataWatermark = document.querySelector(".data-watermark");
+
+let notesWatermark = document.querySelector(".notes-watermark");
+
+let addData = document.querySelector("#add-data");
+let addDataBtn = document.querySelector("#add-data-btn");
+
+let addNotes = document.querySelector("#add-notes");
+let addNotesBtn = document.querySelector("#add-notes-btn");
+
+////////////////////////////// DATA ELEMENT DOM OUTLINE/STRUCTURE /////////////////////////////////////////
+
+// Function for creating data elements
+const createDataElement = function (data) {
+  // creating data container inside the data list
+  let dataContainer = document.createElement("div");
+  dataContainer.classList.add("data-container");
+  dataContainer.id = `data-${dataList.children.length}--container`;
+
+  // creating the actual data details
+  let dataText = document.createElement("p");
+  dataText.classList.add("data-text"); // this is the class of the data
+  dataText.textContent = data; // this is the title of the data
+  dataText.id = `data-${dataList.children.length}--text`; // assigning an id to the data text
+
+  let dltBtn = document.createElement("div"); // creating the dlt btn
+  dltBtn.classList.add("dlt-btn");
+  dltBtn.innerHTML = "&times;";
+  dltBtn.id = `data-${dataList.children.length}--dlt-btn`;
+
+  // appending the data text and dlt btn to the data content
+  dataContainer.appendChild(dataText);
+  dataContainer.appendChild(dltBtn);
+
+  // appending inside data list
+  dataList.appendChild(dataContainer);
+  return dataList.children.length;
+};
+
+////////////////////////////// NOTES ELEMENT DOM OUTLINE/STRUCTURE /////////////////////////////////////////
+
+// Function for creating notes elements
+const createNoteElement = function (note) {
+  // creating note container
+  let noteContainer = document.createElement("div");
+  noteContainer.classList.add("note-container");
+  noteContainer.id = `note-${notesList.children.length}`;
+
+  // creating the note details
+  let noteText = document.createElement("p");
+  noteText.classList.add("note-text"); // assigning the class to the note
+  noteText.textContent = note; // this is the content of the note
+  noteText.id = `note-${notesList.children.length}--text`; // assigning an id to the note text
+
+  // creating the dlt btn
+  let dltBtn = document.createElement("div");
+  dltBtn.classList.add("note-dlt-btn");
+  dltBtn.innerHTML = "&times;";
+  dltBtn.id = `note-${notesList.children.length}--dlt-btn`;
+
+  // appending the note content elements to the container
+  noteContainer.appendChild(noteText);
+  noteContainer.appendChild(dltBtn);
+
+  // appending note container to notes list
+  notesList.appendChild(noteContainer);
+  return notesList.children.length;
+};
+
+////////////////////////////////// CREATE FUNCTIONALITY /////////////////////////////////////////////
+
+// Function for creating data
+
+const createData = function () {
+  if (addData.value !== "") {
+    dataObjects.set(createDataElement(addData.value) - 1, addData.value);
+    storeDataToLocalStorage();
+    addData.value = "";
+    dataWatermark.classList.add("hidden");
+  }
+};
+
+addDataBtn.addEventListener("click", createData);
+
+const createNote = function () {
+  if (addNotes.value !== "") {
+    notesObjects.set(createNoteElement(addNotes.value) - 1, addNotes.value);
+    storeNotesToLocalStorage();
+    addNotes.value = "";
+    notesWatermark.classList.add("hidden");
+  }
+};
+
+addNotesBtn.addEventListener("click", createNote);
+
+//////////////////////////////// DELETE FUNCTIONALITY /////////////////////////////////////////////
+
+// Function for deleting data
+
+dataList.addEventListener("click", function (e) {
+  if (e.target.classList.contains("dlt-btn")) {
+    e.target.parentElement.remove();
+    dataObjects.delete(e.target.parentElement.id.split("-")[1]);
+    if (dataList.children.length === 1) {
+      dataWatermark.classList.toggle("hidden");
+      window.localStorage.removeItem("data");
+    } else {
+      storeDataToLocalStorage();
+    }
+  }
+});
+
+// Function for deleting notes
+notesList.addEventListener("click", function (e) {
+  if (e.target.classList.contains("note-dlt-btn")) {
+    e.target.parentElement.remove();
+    notesObjects.delete(e.target.parentElement.id.split("-")[1]);
+    if (notesList.children.length === 1) {
+      notesWatermark.classList.toggle("hidden");
+      window.localStorage.removeItem("notes");
+    } else {
+      storeNotesToLocalStorage();
+    }
+  }
+});
+
+//////////////////////////////////// EDITING FUNCTIONALITY //////////////////////////////////////
+
+// Function for editing data
+
+dataList.addEventListener("click", function (event) {
+  if (event.target.classList.contains("data-text")) {
+    editData(event.target.id.split("-")[1]);
+  }
+});
+
+const editData = function (data) {
+  let dataText = document.querySelector(`#data-${data}--text`); // here data is the ID for the selector
+  dataText.contentEditable = true;
+  dataText.focus();
+  dataText.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      dataText.contentEditable = false;
+      dataText.textContent = event.target.textContent;
+      dataObjects.set(Number(data), event.target.textContent);
+      storeDataToLocalStorage();
+    } else if (event.key === "Esc") {
+      dataText.contentEditable = false;
+      event.preventDefault();
+    }
+  });
+};
+
+// Adding the edit functionality for notes
+document
+  .querySelector("#main-notes-list")
+  .addEventListener("click", function (event) {
+    if (event.target.classList.contains("note-text")) {
+      editNotes(event.target.id.split("-")[1]);
+    }
+  });
+
+const editNotes = function (notes) {
+  let notesText = document.querySelector(`#note-${notes}--text`); // here notes is the ID for the selector
+  notesText.contentEditable = true;
+  notesText.focus();
+  notesText.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      notesText.contentEditable = false;
+      notesText.textContent = event.target.textContent;
+      notesObjects.set(Number(notes), event.target.textContent);
+      storeNotesToLocalStorage();
+    } else if (event.key === "Esc") {
+      notesText.contentEditable = false;
+      event.preventDefault();
+    }
+  });
+};
+
+/////////////////////////////// INIT FUNCTIONALITY /////////////////////////////////////////////
+
+const init = function () {
+  if (window.localStorage.getItem("data")) {
+    dataWatermark.classList.add("hidden");
+    dataObjects = new Map(JSON.parse(window.localStorage.getItem("data")));
+    for (let i = 1; i <= dataObjects.size; i++) {
+      createDataElement(dataObjects.get(i));
+    }
+  }
+
+  if (window.localStorage.getItem("notes")) {
+    notesWatermark.classList.add("hidden");
+    notesObjects = new Map(JSON.parse(window.localStorage.getItem("notes")));
+    for (let i = 1; i <= notesObjects.size; i++) {
+      createNoteElement(notesObjects.get(i));
+    }
+  }
+};
+init();
