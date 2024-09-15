@@ -12,13 +12,6 @@
         overflow: hidden;
     }
 
-    /* 
-    .page {
-        border: 1px solid #ccc;
-        border-radius: 24px;
-        margin: 5px;
-    } */
-
     /* Utility Functionality */
     .hidden {
         display: none;
@@ -234,7 +227,6 @@
     }
 
     .notes-list--list {
-        /* border: 1px solid #ccc; */
         height: 70vh;
         border-radius: 10px;
         padding: 10px;

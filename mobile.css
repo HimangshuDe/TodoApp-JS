@@ -78,7 +78,6 @@
     }
 
     .section-main {
-        /* height: 36vh; */
         flex-basis: 45%;
         border-bottom: 1px solid #000;
         width: 100%;
@@ -87,7 +86,6 @@
         border-top-right-radius: 14px;
         display: flex;
         flex-direction: column;
-        /* padding: 3px; */
     }
 
     .data-container {

@@ -8,13 +8,11 @@ let notesObjects = Object.create({});
 // Storing data in local storage
 const storeDataToLocalStorage = function () {
   window.localStorage.setItem("data", JSON.stringify(dataObjects));
-  console.log(window.localStorage);
 };
 
 // Storing notes in local storage
 const storeNotesToLocalStorage = function () {
   window.localStorage.setItem("notes", JSON.stringify(notesObjects));
-  console.log(window.localStorage);
 };
 
 //////////////////////////////////////// Selectors ////////////////////////////////////////////
@@ -99,7 +97,6 @@ const createData = function () {
   if (addData.value !== "") {
     dataObjects[createDataElement(addData.value) - 1] = addData.value;
     storeDataToLocalStorage();
-    console.log(dataObjects);
     addData.value = "";
     dataWatermark.classList.add("hidden");
   }
@@ -111,7 +108,6 @@ const createNote = function () {
   if (addNotes.value !== "") {
     notesObjects[createNoteElement(addNotes.value) - 1] = addNotes.value; // createNoteElement returns the length of the list
     storeNotesToLocalStorage();
-    console.log(notesObjects);
     addNotes.value = "";
     notesWatermark.classList.add("hidden");
   }
@@ -127,13 +123,10 @@ dataList.addEventListener("click", function (e) {
   if (e.target.classList.contains("dlt-btn")) {
     e.target.parentElement.remove();
     delete dataObjects[e.target.parentElement.id.split("-")[1]];
-    console.log(dataObjects);
     if (dataList.children.length === 1) {
       dataWatermark.classList.toggle("hidden");
       window.localStorage.removeItem("data");
     } else {
-      // window.localStorage.removeItem("data");
-      // console.log(window.localStorage);
       storeDataToLocalStorage();
     }
   }
@@ -144,13 +137,11 @@ notesList.addEventListener("click", function (e) {
   if (e.target.classList.contains("note-dlt-btn")) {
     e.target.parentElement.remove();
     delete notesObjects[e.target.parentElement.id.split("-")[1]];
-    console.log(notesObjects);
     if (notesList.children.length === 1) {
       notesWatermark.classList.toggle("hidden");
       window.localStorage.removeItem("notes");
     } else {
       // window.localStorage.removeItem("notes");
-      console.log(window.localStorage);
       storeNotesToLocalStorage();
     }
   }
@@ -176,7 +167,6 @@ const editData = function (data) {
       dataText.contentEditable = false;
       dataText.textContent = event.target.textContent;
       dataObjects[Number(data)] = event.target.textContent;
-      console.log(dataObjects);
       storeDataToLocalStorage();
     } else if (event.key === "Esc") {
       dataText.contentEditable = false;
@@ -204,7 +194,6 @@ const editNotes = function (notes) {
       notesText.contentEditable = false;
       notesText.textContent = event.target.textContent;
       notesObjects[Number(notes)] = event.target.textContent;
-      console.log(notesObjects);
       storeNotesToLocalStorage();
     } else if (event.key === "Esc") {
       notesText.contentEditable = false;
@@ -216,8 +205,6 @@ const editNotes = function (notes) {
 /////////////////////////////// INIT FUNCTIONALITY /////////////////////////////////////////////
 
 const init = function () {
-  console.log("init triggered");
-  console.log(window.localStorage);
   if (window.localStorage.getItem("data")) {
     dataWatermark.classList.add("hidden");
     dataObjects = JSON.parse(window.localStorage.getItem("data"));
