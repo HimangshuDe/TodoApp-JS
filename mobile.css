@@ -1,0 +1,203 @@
+@media screen and (max-width: 1023px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(-120deg, #6a994e, #9ac041) no-repeat center center/cover;
+        height: 100vh;
+        overflow-y: hidden;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .header {
+        margin: 5px;
+        padding: 7px;
+        background: linear-gradient(120deg, #ffffffc4, #e4e3e371);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .header h1 {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .header .input-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .header .input-container input#add-data {
+        height: 18px;
+        width: 70%;
+        padding: 10px;
+        font-size: 16px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border: 1px solid;
+        outline: none;
+        background: transparent;
+        margin-left: 10px;
+    }
+
+    .header .input-container button#add-data-btn {
+        padding: 0px 5px;
+        background: transparent;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: 1px solid;
+        outline: none;
+        width: 20%;
+    }
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        justify-content: space-between;
+        margin: 5px;
+        padding: 5px;
+        background: linear-gradient(120deg, #dadadac4, #e4e3e34d);
+        border: 1px solid #fff;
+        height: 83vh;
+        border-radius: 20px;
+        overflow: scroll;
+    }
+
+    .section-main {
+        /* height: 36vh; */
+        flex-basis: 45%;
+        border-bottom: 1px solid #000;
+        width: 100%;
+        overflow-y: scroll;
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        /* padding: 3px; */
+    }
+
+    .data-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        border-radius: 10px;
+        background: #fff;
+        margin: 3px 0;
+    }
+
+    .data-text {
+        font-weight: bold;
+        width: 70%;
+        max-width: 70%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .dlt-btn {
+        text-align: center;
+        border-radius: 50%;
+        background: #e65555;
+        color: #fff;
+        width: 23px;
+        height: 23px;
+    }
+
+    .data-watermark {
+        text-align: center;
+        font-size: 24px;
+        margin-top: 30px;
+    }
+
+    /* Notes styling area */
+    .section-notes {
+        /* height: 44vh; */
+        flex-basis: 54%;
+        border-top: 1px solid #000;
+        width: 100%;
+        overflow-y: scroll;
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+    }
+
+    .section-notes .notes-list--header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 4px 0;
+        width: 100%;
+    }
+
+    .section-notes .notes-list--header input#add-notes {
+        height: 18px;
+        padding: 12px;
+        width: 80%;
+        font-size: 16px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border: 1px solid;
+        outline: none;
+        background: transparent;
+    }
+
+    .section-notes .notes-list--header button#add-notes-btn {
+        padding: 2px 5px;
+        background: transparent;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: 1px solid;
+        outline: none;
+        width: 15%;
+    }
+
+    .notes-watermark {
+        text-align: center;
+        font-size: 20px;
+        margin-top: 30px;
+    }
+
+    .note-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        background: #fff;
+        margin: 5px 0;
+    }
+
+    .note-text {
+        width: 70%;
+        max-width: 70%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: normal;
+    }
+
+    .note-dlt-btn {
+        text-align: center;
+        border-radius: 50%;
+        background: #e65555;
+        color: #fff;
+        width: 23px;
+        height: 23px;
+    }
+}

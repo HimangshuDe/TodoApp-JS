@@ -172,6 +172,7 @@ const editData = function (data) {
   dataText.focus();
   dataText.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
+      dataText.blur();
       dataText.contentEditable = false;
       dataText.textContent = event.target.textContent;
       dataObjects[Number(data)] = event.target.textContent;
@@ -199,6 +200,7 @@ const editNotes = function (notes) {
   notesText.focus();
   notesText.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
+      notesText.blur();
       notesText.contentEditable = false;
       notesText.textContent = event.target.textContent;
       notesObjects[Number(notes)] = event.target.textContent;
